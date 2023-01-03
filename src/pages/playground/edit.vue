@@ -144,9 +144,11 @@
 </template>
 
 <script setup lang="ts">
-import { html_beautify, js_beautify } from 'js-beautify'
+import JsBeatify from 'js-beautify'
 import { Splitpanes, Pane } from 'splitpanes'
 import 'splitpanes/dist/splitpanes.css'
+
+const { html_beautify, js_beautify } = JsBeatify
 
 const debounce = (callback: Function, wait: number) => {
   let timeoutId: any = null
