@@ -19,6 +19,7 @@
   >
     <template #header>
       <h1 class="text-xl font-serif tracking-wider text-teal-200">🪴 Plant.co</h1>
+      <NuxtLink to="/"><Icon name="mdi:home"></Icon></NuxtLink>
     </template>
     <template #sidebar>
       <div
