@@ -9,6 +9,8 @@ export default defineNuxtConfig({
         ;(config.resolve.alias as any)['lodash.debounce'] = 'lodash.debounce/index.js'
         ;(config.resolve.alias as any).vuedraggable = 'vuedraggable/dist/vuedraggable.common.js'
         ;(config.resolve.alias as any).jsurl = 'jsurl/lib/jsurl.js'
+        ;(config.resolve.alias as any)['highlight.js/styles'] = 'highlight.js/styles'
+        ;(config.resolve.alias as any)['highlight.js'] = 'highlight.js/es'
       }
     },
   },

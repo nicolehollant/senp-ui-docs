@@ -6,7 +6,7 @@
         extend: 'bg-black/20 backdrop-blur shadow border-b !px-6 border-neutral-800',
       },
       content: {
-        base: 'relative z-10 flex gap-8 h-full px-6 pt-6 overflow-auto',
+        base: 'relative z-10 flex flex-col gap-8 h-full px-6 pt-6 overflow-auto',
       },
       wrapper: {
         extend: '!overflow-hidden',
@@ -21,19 +21,42 @@
       <NuxtLink to="/"><Icon name="mdi:home"></Icon></NuxtLink>
     </template>
     <template #content>
-      <SenpPrismHighlight
+      <div class="flex gap-2">
+        <SenpButton @click="() => (mode = 'ts')">TS</SenpButton>
+        <SenpButton @click="() => (mode = 'js')">JSON</SenpButton>
+      </div>
+      <SenpHljsHighlight
+        v-if="mode === 'ts'"
         title="SampleTS.ts"
         theme="atom-dark"
         class="bg-black/20 h-max"
-        language="typescript"
+        language="javascript"
         :value="tsValue"
-      ></SenpPrismHighlight>
+      ></SenpHljsHighlight>
+      <SenpHljsHighlight
+        v-else-if="mode === 'js'"
+        title="SampleTS.ts"
+        theme="atom-dark"
+        class="bg-black/20 h-max"
+        language="javascript"
+        :value="jsValue"
+      ></SenpHljsHighlight>
     </template>
   </SenpLayoutBasic>
 </template>
 
 <script setup lang="ts">
-const tsValue = `const jsonValue = [
+const mode = ref('ts')
+const tsValue = `const tsValue = [
+  {
+    status: 'In Progress',
+    created: '2023-01-11T22:39:16.743Z',
+    assigned: 'Bessie Hayes',
+    description:
+      'Dignissimos atque distinctio blanditiis. Nesciunt sit molestias atque quis exercitationem. Et excepturi assumenda nisi voluptates occaecati veritatis eligendi in cum.',
+  }
+]`
+const jsValue = `const jsonValue = [
   {
     status: 'In Progress',
     created: '2023-01-11T22:39:16.743Z',
