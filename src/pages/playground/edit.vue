@@ -17,6 +17,15 @@
     <template #header>
       <h1 class="text-xl">Playground</h1>
       <div class="flex items-center gap-4">
+        <div class="flex items-center gap-2">
+          <SenpTextInput v-model="slug" :classes="{ input: { extend: '!h-9' } }"></SenpTextInput>
+          <button
+            @click="upload"
+            class="h-[36px] inline-flex items-center justify-center p-2 hover:bg-neutral-600 transition border-r border-neutral-900 rounded bg-neutral-800"
+          >
+            <Icon name="mdi:upload"></Icon>
+          </button>
+        </div>
         <div class="flex items-center">
           <button
             @click="editorMode === 'template' ? formatTemplate() : formatState()"
@@ -144,6 +153,7 @@
 </template>
 
 <script setup lang="ts">
+import { nanoid } from 'nanoid'
 import JsBeatify from 'js-beautify'
 import { Splitpanes, Pane } from 'splitpanes'
 import 'splitpanes/dist/splitpanes.css'
@@ -160,6 +170,7 @@ const debounce = (callback: Function, wait: number) => {
   }
 }
 
+const slug = ref('')
 const code = ref('')
 const codeKey = ref(0)
 const codeState = ref('{}')
@@ -198,6 +209,18 @@ const updateSize = (evt: any) => {
 watch([code, codeState], () => {
   _compile(code.value, codeState.value)
 })
+
+const router = useRouter()
+const upload = async () => {
+  const created = await playgroundApi.create({
+    slug: [slug.value, nanoid(6)].filter((a) => !!a).join('-'),
+    state: codeState.value,
+    template: code.value,
+  })
+  if ((created as any).data.slug) {
+    router.push(`/playground/view/${(created as any).data.slug}`)
+  }
+}
 
 onMounted(() => {
   code.value = localStorage.getItem('playgroundTemplate') || ''
